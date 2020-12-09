@@ -11,6 +11,11 @@
           </div>
         </article>
     {% endfor %}
+    <a class="nav-item nav-link" href="/dashboard/classroom/{{ classroom.id }}/create_forum/">
+        <div class="form-group">
+            <button class="btn btn-outline-info" type="submit">Create New Forum</button>
+        </div>
+    </a>
     <!--    exams   -->
     <h1> Exams </h1>
     {% for exam in exams %}

@@ -37,9 +37,9 @@ class Classroom(models.Model):
 
 class Forum(models.Model):
     title = models.CharField(max_length=100)
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
     date_created = models.DateTimeField(default=timezone.now)
-    classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE)
+    classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE, null=True, related_name="forum_set")
 
     def __str__(self):
         return self.title
@@ -49,7 +49,7 @@ class Post(models.Model):
     content = models.TextField()
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    forum = models.ForeignKey(Forum, on_delete=models.CASCADE)
+    forum = models.ForeignKey(Forum, on_delete=models.CASCADE, related_name="post_set")
 
     def __str__(self):
         return self.content
@@ -61,7 +61,7 @@ class Exam(models.Model):
     exam_file = models.FileField(upload_to='documents/%Y/%m/%d/')
 
     # mark of the students in this exam
-    classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE, null=True)
+    classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE, null=True, related_name="exam_set")
 
     def __str__(self):
         return self.title
