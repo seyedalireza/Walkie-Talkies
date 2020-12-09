@@ -26,7 +26,7 @@ def dashboard(request):
 def classroom(request, classroom_id):
     if match(user=request.user, classroom_id=classroom_id):
         classroom = Classroom.objects.get(id=classroom_id)
-        return render(request, 'blog/classroom.html', {'forums': get_forums(classroom), 'exams': get_exams(classroom)})
+        return render(request, 'blog/classroom.html', {'forums': get_forums(classroom), 'exams': get_exams(classroom), 'classroom':classroom})
     else:
         messages.error(request, 'Sorry, We found out that you are not a member of the classroom!')
         return redirect('dashboard')
@@ -81,6 +81,20 @@ def forum(request, classroom_id, forum_id):
     else:
         messages.error(request, 'Something went wrong!')
         return redirect('dashboard')
+
+
+def create_forum(request, classroom_id):
+    if request.method == 'POST':
+        form = ForumCreationForm(request.POST)
+        if form.is_valid():
+            form = form.save()
+            form.classroom = Classroom.objects.get(id=classroom_id)
+            form.save()
+            messages.success(request, f'Forum has been created!')
+            return redirect('/dashboard/classroom/'+str(classroom_id))  # TODO except dashboard it should redirect to class's page
+    else:
+        form = ForumCreationForm()
+    return render(request, 'blog/create_forum.html', {'form': form})
 
 
 def create_exam(request, classroom_id):
