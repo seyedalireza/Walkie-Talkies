@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:http="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            width: 50%;
+            border: 1px solid #73a9d2;
+            border-radius: 15px;
+        }
+        .header {
+            background-color: #73a9d2;
+            padding: 15px;
+            color: white;
+            text-align: center;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+        .main {
+            display: flex;
+            flex-direction: column;
+            background-color: #ecfff8;
+            max-height: 400px;
+            overflow: auto;
+            padding-bottom: 10px;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .footer {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            border-top: 1px solid #73a9d2;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        ::-webkit-scrollbar {
+            opacity: 0;
+            width: 0;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FF0000;
+        }
+        input[type=text] {
+            margin-left: 35px;
+            height: max-content;
+            height: 47px;
+            width: 580px;
+            border-bottom-right-radius: 15px;
+            border: 0px;
+            text-decoration: none;
+            position: relative;
+            top: -10px;
+        }
+
+        .container {
+          border: 2px solid #eaeaea;
+          background-color: #f8f8f8;
+          border-radius: 5px;
+          padding: 10px;
+          margin: 10px 10px;
+          width: 55%;
+        }
+
+        .container::after {
+          content: "";
+          clear: both;
+          display: table;
+        }
+
+        .container img {
+          float: left;
+          max-width: 45px;
+          height: 45px;
+          margin-right: 20px;
+          border-radius: 50%;
+        }
+
+        .container img.right {
+          float: right;
+          margin-left: 20px;
+          margin-right:0;
+        }
+
+        .time-right {
+          float: right;
+          color: #aaa;
+        }
+
+        .time-left {
+          float: left;
+          color: #999;
+        }
+        .rightAlign {
+            align-self: flex-end;
+        }
+        .nameRightAlign {
+            text-align: right;
+        }
+        .username {
+            font-weight: bold;
+            color: #15367d;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+chatroom
+</div>
+<div class="main">
+    <div class="container">
+      <img src="https://cdn.britannica.com/84/73184-004-E5A450B5/Sunflower-field-Fargo-North-Dakota.jpg" alt="Avatar" style="width:100%;">
+        <p class="username">Mohammad</p>
+        <p>Hello. How are you today?</p>
+      <span class="time-right">11:00</span>
+    </div>
+    <div class="container rightAlign">
+      <img src="https://cdn.britannica.com/84/73184-004-E5A450B5/Sunflower-field-Fargo-North-Dakota.jpg" alt="Avatar" style="width:100%;" class="right">
+        <p class="username nameRightAlign">You</p>
+        <p>what's up? what's up?what's up?what's up?what's up?what's up?what's up?what's up?what's up? what's up?what's up?what's up?</p>
+      <span class="time-left">11:00</span>
+    </div>
+    <div class="container">
+      <img src="https://cdn.britannica.com/84/73184-004-E5A450B5/Sunflower-field-Fargo-North-Dakota.jpg" alt="Avatar" style="width:100%;">
+        <p class="username">Mohammad</p>
+        <p>Hello. How are you today?</p>
+      <span class="time-right">11:00</span>
+    </div>
+</div>
+
+<div class="footer">
+    <div style="background-color: #73a9d2; margin: 10px;border-radius: 50%; height:30px; width: 30px;background-image: url(https://cdn.britannica.com/84/73184-004-E5A450B5/Sunflower-field-Fargo-North-Dakota.jpg);background-repeat: no-repeat;background-size: 100% 100%; "/>
+    <input class="footer_input" type="text" placeholder="text here..."/>
+<!--    <div>-->
+
+<!--    </div>-->
+</div>
+
+</body>
+</html>
