@@ -4,12 +4,20 @@ from django.contrib.auth.forms import UserCreationForm
 from django.forms import ModelForm
 from .models import *
 
+
 class ClassCreationForm(ModelForm):
     class Meta:
         model = Classroom
         fields = ['lesson', 'grade', 'class_num', "description"]
 
+
 class ExamCreationForm(ModelForm):
     class Meta:
         model = Exam
         fields = ['title', 'description', 'exam_file']
+
+
+class ForumCreationForm(ModelForm):
+    class Meta:
+        model = Forum
+        fields = ['title', 'description']
