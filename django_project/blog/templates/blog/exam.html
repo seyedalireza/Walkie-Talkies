@@ -1,6 +1,9 @@
 {% extends "blog/base.html" %}
 {% block content %}
-
+    <h1>{{ exam.title }}</h1>
+    <h2>Description</h2>
+    <p>{{ exam.description }}</p>
+    <p>Exam File: <a href="{{ exam.exam_file.url }}">Download</a></p>
 {% endblock content %}
 
 

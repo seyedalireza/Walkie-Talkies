@@ -22,11 +22,16 @@
          <article class="media content-section">
           <div class="media-body">
             <div class="article-metadata">
-              <a class="mr-2" href="#">{{exam.title}}</a>
+              <a class="mr-2" href="exams/{{ exam.id }}/">{{exam.title}}</a>
             </div>
           </div>
         </article>
     {% endfor %}
+    <a class="nav-item nav-link" href="/dashboard/classroom/{{ classroom.id }}/create_exam/">
+        <div class="form-group">
+            <button class="btn btn-outline-info" type="submit">Create New Exam</button>
+        </div>
+    </a>
 {% endblock content %}
 
 
