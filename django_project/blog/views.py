@@ -114,9 +114,23 @@ def create_exam(request, classroom_id):
 
 
 def exam_page(request, classroom_id, exam_id):
-    if match(user=request.user, classroom_id=classroom_id, exam_id=exam_id):
-        exam = get_exams(Classroom.objects.get(id=classroom_id)).get(id=exam_id)
-        return render(request, 'blog/exam.html', {'exam': exam, 'url': settings.MEDIA_ROOT})
-    else:
-        messages.error(request, 'Something went wrong!')
-        return redirect('dashboard')
+    if request.method == 'GET':
+        if match(user=request.user, classroom_id=classroom_id, exam_id=exam_id):
+            exam = get_exams(Classroom.objects.get(id=classroom_id)).get(id=exam_id)
+            form = ResponseForm()
+            return render(request, 'blog/exam.html', {'exam': exam, 'url': settings.MEDIA_ROOT, 'form': form})
+        else:
+            messages.error(request, 'Something went wrong!')
+            return redirect('dashboard')
+    elif request.method == 'POST':
+        form = ResponseForm(request.POST, request.FILES)
+        if form.is_valid() or match(user=request.user, classroom_id=classroom_id, exam_id=exam_id):
+            form = form.save(commit=False)
+            form.student = request.user
+            form.exam = get_exams(Classroom.objects.get(id=classroom_id)).get(id=exam_id)
+            form.save()
+            messages.success(request, f'your response sent successfully!')
+            return redirect('/dashboard/classroom/' + str(classroom_id))
+        else:
+            messages.error(request, 'Something went wrong!')
+            return redirect('dashboard')

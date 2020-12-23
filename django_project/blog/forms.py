@@ -17,6 +17,12 @@ class ExamCreationForm(ModelForm):
         fields = ['title', 'description', 'exam_file']
 
 
+class ResponseForm(ModelForm):
+    class Meta:
+        model = Response
+        fields = ['response_file', 'description']
+
+
 class ForumCreationForm(ModelForm):
     class Meta:
         model = Forum

@@ -65,3 +65,12 @@ class Exam(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Response(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    exam = models.ForeignKey(Exam, on_delete=models.CASCADE, null=False)
+    student = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
+    response_file = models.FileField(upload_to='responses/%Y/%m/%d/', verbose_name="response")
+    submit_time = models.DateTimeField(default=timezone.now)
+    description = models.TextField(null=True, blank=True)
