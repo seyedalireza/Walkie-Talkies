@@ -9,12 +9,18 @@
             </div>
             <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
             <p class="article-content">{{ post.content }}</p>
+            {% if post.file_field %}
+                <p>File: <a href="{{ post.file_field.url }}">Download</a></p>
+          {% endif %}
           </div>
         </article>
     {% endfor %}
-    <form action="." method="POST">
+    <form action="." method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        <input class="form-control" type="text" name="content" placeholder="Your comment"/>
-        <input class="btn btn-outline-info" type="submit" value="Post" />
+        <div class="form-group">
+            <input class="form-control" type="text" name="content" placeholder="Your comment"/>
+            <input type="file" name="file"/>
+            <input class="btn btn-outline-info" type="submit" value="Post" />
+        </div>
     </form>
 {% endblock content %}
