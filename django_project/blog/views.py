@@ -72,11 +72,15 @@ def join_classroom(request):
 def forum(request, classroom_id, forum_id):
     if request.method == 'POST':
         content = request.POST.get('content')
-        create_post(content, request.user, forum_id)
+        if request.FILES:
+            file_filed = request.FILES['file']
+        else:
+            file_filed = None
+        create_post(content, request.user, forum_id, file_filed)
 
     if match(user=request.user, classroom_id=classroom_id, forum_id=forum_id):
         forum = get_forums(Classroom.objects.get(id=classroom_id)).get(id=forum_id)
-        return render(request, 'blog/forum.html', {'posts': get_posts(forum)})
+        return render(request, 'blog/forum.html', {'posts': get_posts(forum), 'url': settings.MEDIA_ROOT})
     else:
         messages.error(request, 'Something went wrong!')
         return redirect('dashboard')

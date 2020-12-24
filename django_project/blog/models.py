@@ -48,6 +48,7 @@ class Forum(models.Model):
 
 class Post(models.Model):
     content = models.TextField()
+    file_field = models.FileField(upload_to='uploads/%Y/%m/%d/', null=True, verbose_name='post_file')
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     forum = models.ForeignKey(Forum, on_delete=models.CASCADE, related_name="post_set")
