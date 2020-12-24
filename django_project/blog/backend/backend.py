@@ -22,9 +22,9 @@ def create_forum(title, classroom, description=None):
     forum.save()
 
 
-def create_post(content, author, forum_id):
+def create_post(content, author, forum_id, file_field):
     if match(user=author, forum_id=forum_id):
-        post = Post(content=content, author=author, forum=Forum.objects.get(id=forum_id))
+        post = Post(content=content, file_field=file_field, author=author, forum=Forum.objects.get(id=forum_id))
         post.save()
         print("post created")
     else:
