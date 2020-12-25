@@ -75,3 +75,6 @@ class Response(models.Model):
     response_file = models.FileField(upload_to='responses/%Y/%m/%d/', verbose_name="response")
     submit_time = models.DateTimeField(default=timezone.now)
     description = models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        return self.student
