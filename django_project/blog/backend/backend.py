@@ -55,6 +55,10 @@ def get_exams(classroom):
     return classroom.exam_set.all()
 
 
+def get_responses(exam):
+    return sorted(exam.response_set.all(), key=lambda x: x.submit_time)
+
+
 def get_posts(forum):
     return sorted(forum.post_set.all(), key=lambda x: x.date_posted)
 

@@ -105,6 +105,7 @@ def forum(request, classroom_id, forum_id):
         return redirect('dashboard')
 
 
+@login_required()
 def create_forum(request, classroom_id):
     if request.method == 'POST':
         form = ForumCreationForm(request.POST)
@@ -119,6 +120,7 @@ def create_forum(request, classroom_id):
     return render(request, 'blog/create_forum.html', {'form': form})
 
 
+@login_required()
 def create_exam(request, classroom_id):
     if request.method == 'POST':
         form = ExamCreationForm(request.POST, request.FILES)
@@ -136,12 +138,18 @@ def create_exam(request, classroom_id):
         return render(request, 'blog/404.html', {})
 
 
+@login_required()
 def exam_page(request, classroom_id, exam_id):
     if request.method == 'GET':
         if match(user=request.user, classroom_id=classroom_id, exam_id=exam_id):
-            exam = get_exams(Classroom.objects.get(id=classroom_id)).get(id=exam_id)
-            form = ResponseForm()
-            return render(request, 'blog/exam.html', {'exam': exam, 'url': settings.MEDIA_ROOT, 'form': form})
+            if Profile.objects.get(user_id=request.user).type == 'student':
+                exam = get_exams(Classroom.objects.get(id=classroom_id)).get(id=exam_id)
+                form = ResponseForm()
+                return render(request, 'blog/exam.html', {'exam': exam, 'url': settings.MEDIA_ROOT, 'form': form})
+            elif Profile.objects.get(user_id=request.user).type == 'teacher':
+                exam = get_exams(Classroom.objects.get(id=classroom_id)).get(id=exam_id)
+                return render(request, 'blog/teacher_exam.html',
+                              {'exam': exam, 'url': settings.MEDIA_ROOT, 'responses': get_responses(exam)})
         else:
             messages.error(request, 'Something went wrong!')
             return redirect('dashboard')
