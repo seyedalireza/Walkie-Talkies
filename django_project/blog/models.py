@@ -52,9 +52,18 @@ class Post(models.Model):
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     forum = models.ForeignKey(Forum, on_delete=models.CASCADE, related_name="post_set")
+    pinned = models.BooleanField(default=False)
 
     def __str__(self):
         return self.content
+
+    def pin(self):
+        self.pinned = True
+        self.save()
+
+    def unpin(self):
+        self.pinned = False
+        self.save()
 
 
 class Exam(models.Model):
