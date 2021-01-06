@@ -1,10 +1,29 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.conf import settings
 from users.models import Profile
 from .backend.backend import *
 from .forms import *
+
+
+@login_required
+def pin_post(request, classroom_id, forum_id, post_id):
+    print("request", request)
+    print(Post.objects.all().count())
+    for p in Post.objects.all():
+        p.unpin()
+    post = Post.objects.filter(id=post_id).first()
+    post.pin()
+    return redirect('/dashboard/classroom/' + str(classroom_id) + '/' + str(forum_id))
+
+
+@login_required
+def unpin_post(request, classroom_id, forum_id, post_id):
+    print("request", request)
+    post = get_object_or_404(Post, id=post_id)
+    post.unpin()
+    return redirect('/dashboard/classroom/' + str(classroom_id) + '/' + str(forum_id))
 
 
 def home(request):
