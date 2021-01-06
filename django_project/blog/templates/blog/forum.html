@@ -1,19 +1,43 @@
 {% extends "blog/base.html" %}
 {% block content %}
     {% for post in posts %}
-        <article class="media content-section">
-          <div class="media-body">
-            <div class="article-metadata">
-              <a class="mr-2" href="#">{{ post.author }}</a>
-              <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
-            </div>
-            <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
-            <p class="article-content">{{ post.content }}</p>
-            {% if post.file_field %}
-                <p>File: <a href="{{ post.file_field.url }}">Download</a></p>
-          {% endif %}
-          </div>
-        </article>
+        {% if post.pinned %}
+            <article class="media content-section">
+              <div class="media-body">
+                <div class="article-metadata">
+                  <a class="mr-2" href="#">{{ post.author }}</a>
+                  <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+                </div>
+                <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
+                <p class="article-content">{{ post.content }}</p>
+                {% if post.file_field %}
+                    <p>File: <a href="{{ post.file_field.url }}">Download</a></p>
+                {% endif %}
+                <div class="article-metadata">
+                  <a class="mr-2" href="{% url 'unpin' classroom_id=post.forum.classroom.id forum_id=post.forum.id post_id=post.id  %}">unpin</a>
+                </div>
+              </div>
+            </article>
+        {% endif %}
+        {% if not post.pinned %}
+            <article class="media content-section">
+              <div class="media-body">
+                <div class="article-metadata">
+                  <a class="mr-2" href="#">{{ post.author }}</a>
+                  <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+                </div>
+                <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
+                <p class="article-content">{{ post.content }}</p>
+                {% if post.file_field %}
+                    <p>File: <a href="{{ post.file_field.url }}">Download</a></p>
+                {% endif %}
+                <div class="article-metadata">
+                  <a class="mr-2" href="{% url 'pin' classroom_id=post.forum.classroom.id forum_id=post.forum.id post_id=post.id  %}">pin</a>
+                </div>
+              </div>
+            </article>
+        {% endif %}
+
     {% endfor %}
     <form action="." method="POST" enctype="multipart/form-data">
         {% csrf_token %}
