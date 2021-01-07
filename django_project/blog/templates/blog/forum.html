@@ -2,7 +2,7 @@
 {% block content %}
     {% for post in posts %}
         {% if post.pinned %}
-            <article class="media content-section">
+            <article class="media content-section pinned">
               <div class="media-body">
                 <div class="article-metadata">
                   <a class="mr-2" href="#">{{ post.author }}</a>
@@ -19,8 +19,10 @@
               </div>
             </article>
         {% endif %}
+    {% endfor %}
+    {% for post in posts %}
         {% if not post.pinned %}
-            <article class="media content-section">
+            <article class="media content-section not-pinned">
               <div class="media-body">
                 <div class="article-metadata">
                   <a class="mr-2" href="#">{{ post.author }}</a>
@@ -37,8 +39,8 @@
               </div>
             </article>
         {% endif %}
-
     {% endfor %}
+
     <form action="." method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="form-group">
