@@ -13,5 +13,7 @@ urlpatterns = [
     path('dashboard/classroom/<int:classroom_id>/<int:forum_id>/<int:post_id>/pin/', views.pin_post, name='pin'),
     path('dashboard/classroom/<int:classroom_id>/<int:forum_id>/<int:post_id>/unpin/', views.unpin_post, name='unpin'),
     path('dashboard/classroom/<int:classroom_id>/create_exam/', views.create_exam, name='create_exam'),
-    path('dashboard/classroom/<int:classroom_id>/exams/<int:exam_id>/', views.exam_page, name='exam')
+    path('dashboard/classroom/<int:classroom_id>/exams/<int:exam_id>/', views.exam_page, name='exam'),
+    path('dashboard/classroom/<int:classroom_id>/exams/<int:exam_id>/score/<int:response_id>', views.submit_score,
+         name='score')
 ]

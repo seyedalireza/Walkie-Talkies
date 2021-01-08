@@ -27,3 +27,4 @@ class ForumCreationForm(ModelForm):
     class Meta:
         model = Forum
         fields = ['title', 'description']
+

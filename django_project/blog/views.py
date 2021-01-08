@@ -139,6 +139,19 @@ def create_exam(request, classroom_id):
 
 
 @login_required()
+def submit_score(request, classroom_id, exam_id, response_id):
+    if request.method == 'POST' and Profile.objects.get(user_id=request.user).type == 'teacher':
+        response = Response.objects.get(id=response_id)
+        if response is None:
+            return render(request, 'blog/404.html', {})
+        response.score = int(request.POST["score"])
+        response.save()
+        return redirect(exam_page, classroom_id, exam_id)
+    else:
+        return render(request, 'blog/404.html', {})
+
+
+@login_required()
 def exam_page(request, classroom_id, exam_id):
     if request.method == 'GET':
         if match(user=request.user, classroom_id=classroom_id, exam_id=exam_id):
