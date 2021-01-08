@@ -4,6 +4,8 @@
     <h2>Description</h2>
     <p>{{ exam.description }}</p>
     <p>Exam File: <a href="{{ exam.exam_file.url }}">Download</a></p>
+    <h1>Scores</h1>
+    <p> score: {{ response.score }}</p>
     <h1>Send your answers</h1>
 
     <form method="POST" enctype="multipart/form-data">

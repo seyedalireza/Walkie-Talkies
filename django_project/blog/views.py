@@ -158,7 +158,9 @@ def exam_page(request, classroom_id, exam_id):
             if Profile.objects.get(user_id=request.user).type == 'student':
                 exam = get_exams(Classroom.objects.get(id=classroom_id)).get(id=exam_id)
                 form = ResponseForm()
-                return render(request, 'blog/exam.html', {'exam': exam, 'url': settings.MEDIA_ROOT, 'form': form})
+                return render(request, 'blog/exam.html',
+                              {'response': get_response_belongs_student(exam, request.user), 'exam': exam,
+                               'url': settings.MEDIA_ROOT, 'form': form})
             elif Profile.objects.get(user_id=request.user).type == 'teacher':
                 exam = get_exams(Classroom.objects.get(id=classroom_id)).get(id=exam_id)
                 return render(request, 'blog/teacher_exam.html',

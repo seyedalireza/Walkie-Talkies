@@ -59,6 +59,13 @@ def get_responses(exam):
     return sorted(exam.response_set.all(), key=lambda x: x.submit_time)
 
 
+def get_response_belongs_student(exam, user):
+    responses = sorted(exam.response_set.all(), key=lambda x: x.submit_time)
+    for response in responses:
+        if response.student == user:
+            return response
+
+
 def get_posts(forum):
     return sorted(forum.post_set.all(), key=lambda x: x.date_posted)
 
