@@ -10,6 +10,7 @@ urlpatterns = [
     path('dashboard/classroom/<int:classroom_id>/', views.classroom, name='classroom'),
     path('dashboard/classroom/<int:classroom_id>/create_forum/', views.create_forum, name='create-forum'),
     path('dashboard/classroom/<int:classroom_id>/<int:forum_id>/', views.forum, name='forum'),
+    path('dashboard/classroom/<int:classroom_id>/<int:forum_id>/<int:post_id>', views.reply, name='reply'),
     path('dashboard/classroom/<int:classroom_id>/<int:forum_id>/<int:post_id>/pin/', views.pin_post, name='pin'),
     path('dashboard/classroom/<int:classroom_id>/<int:forum_id>/<int:post_id>/unpin/', views.unpin_post, name='unpin'),
     path('dashboard/classroom/<int:classroom_id>/create_exam/', views.create_exam, name='create_exam'),

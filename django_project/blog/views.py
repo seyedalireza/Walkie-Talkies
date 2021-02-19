@@ -106,6 +106,20 @@ def forum(request, classroom_id, forum_id):
 
 
 @login_required()
+def reply(request, classroom_id, forum_id, post_id):
+    if request.method == 'POST':
+        content = request.POST.get('content')
+        create_reply(content, request.user, forum_id, post_id)
+
+    if match(user=request.user, classroom_id=classroom_id, forum_id=forum_id):
+        forum = get_forums(Classroom.objects.get(id=classroom_id)).get(id=forum_id)
+        return render(request, 'blog/forum.html', {'posts': get_posts(forum), 'url': settings.MEDIA_ROOT})
+    else:
+        messages.error(request, 'Something went wrong!')
+        return redirect('dashboard')
+
+
+@login_required()
 def create_forum(request, classroom_id):
     if request.method == 'POST':
         form = ForumCreationForm(request.POST)

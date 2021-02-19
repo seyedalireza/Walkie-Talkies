@@ -66,6 +66,17 @@ class Post(models.Model):
         self.save()
 
 
+class Reply(models.Model):
+    content = models.TextField()
+    date_posted = models.DateTimeField(default=timezone.now)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="reply_set")
+    pinned = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.content
+
+
 class Exam(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()

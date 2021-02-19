@@ -1,4 +1,4 @@
-from ..models import Classroom, Forum, Post, Exam
+from ..models import Classroom, Forum, Post, Exam, Reply
 from users.models import Profile
 
 
@@ -26,6 +26,15 @@ def create_post(content, author, forum_id, file_field):
     if match(user=author, forum_id=forum_id):
         post = Post(content=content, file_field=file_field, author=author, forum=Forum.objects.get(id=forum_id))
         post.save()
+        print("post created")
+    else:
+        print("some problem authenticating")
+
+
+def create_reply(content, author, forum_id, post_id):
+    if match(user=author, forum_id=forum_id, post_id=post_id):
+        reply = Reply(content=content, author=author, post=Post.objects.get(id=post_id))
+        reply.save()
         print("post created")
     else:
         print("some problem authenticating")
@@ -67,7 +76,11 @@ def get_response_belongs_student(exam, user):
 
 
 def get_posts(forum):
-    return sorted(forum.post_set.all(), key=lambda x: x.date_posted)
+    posts = []
+    for post in sorted(forum.post_set.all(), key=lambda x: x.date_posted):
+        posts.append(PostDTO(post, sorted(post.reply_set.all(), key=lambda x: x.date_posted)))
+
+    return posts
 
 
 def exam_belongs_to_classroom(classroom_id, exam_id):
@@ -82,7 +95,7 @@ def is_member_of_classroom(user, classroom_id):
     return classroom_id in [classroom.id for classroom in get_classrooms(user)]
 
 
-def match(user=None, classroom_id=None, forum_id=None, exam_id=None):
+def match(user=None, classroom_id=None, forum_id=None, exam_id=None, post_id=None):
     ans = True
     # return false if given ids are erroneous
     try:
@@ -92,6 +105,8 @@ def match(user=None, classroom_id=None, forum_id=None, exam_id=None):
             Forum.objects.get(id=forum_id)
         if exam_id:
             Exam.objects.get(id=exam_id)
+        if post_id:
+            Post.objects.get(id=post_id)
     except:
         return False
 
@@ -102,3 +117,15 @@ def match(user=None, classroom_id=None, forum_id=None, exam_id=None):
     if classroom_id and exam_id:
         ans = ans and exam_belongs_to_classroom(classroom_id, exam_id)
     return ans
+
+
+class PostDTO:
+    def __init__(self, post, replies=None):
+        self.id = post.id
+        self.content = post.content
+        self.file_field = post.file_field
+        self.date_posted = post.date_posted
+        self.author = post.author
+        self.forum = post.forum
+        self.pinned = post.pinned
+        self.replies = replies
